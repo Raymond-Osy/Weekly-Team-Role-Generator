@@ -1,3 +1,13 @@
+
+const { 
+  PROD_DB_USER,
+  PROD_DB_NAME,
+  PROD_DB_PASSWORD,
+  PROD_DB_HOST
+} = process.env;
+
+require('dotenv').config();
+
 module.exports = {
   "development": {
     "username": "micahakpan",
@@ -15,10 +25,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username":  PROD_DB_USER,
+    "password": PROD_DB_PASSWORD,
+    "database":  PROD_DB_NAME,
+    "host":  PROD_DB_HOST,
+    "dialect": "postgres"
   }
 }

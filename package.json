@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator#readme",
   "dependencies": {
+    "dotenv": "^7.0.0",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.1.0"
