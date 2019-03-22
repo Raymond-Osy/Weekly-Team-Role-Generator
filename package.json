@@ -1,0 +1,20 @@
+{
+  "name": "weekly-gen",
+  "version": "1.0.0",
+  "description": "This app automatically generates a Team leader and two Q and A every Friday each week.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Raymond-Osy/Weekly-Team-Role-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator/issues"
+  },
+  "homepage": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator#readme"
+}
