@@ -72,18 +72,23 @@ const generateTeamRoles = () => {
 generateRoleButton.addEventListener("click", () => generateTeamRoles());
 
 /**
- * @func anyActiveTeamLead
+ * @func getActiveTeamLead
  * @param {Array} members 
  * @param {Array}
  */
-const anyActiveTeamLead = (members) => {
-  const pastTeamLeads = members.filter((member) => member.served);
+const getActiveTeamLead = (members) => {
+  const pastTeamLeads = members.filter((member) => member.served && member.role === 'team lead');
   const activeTeamLead = pastTeamLeads.filter((teamLead) => {
     return (teamLead.dateEnd) && (new Date().getTime() - new Date(teamLead.dateEnd).getTime()) > 0
   });
-
-  console.log(activeTeamLead)
   return activeTeamLead;
+}
+
+/**
+ * @func getActiveTeamQAs
+ */
+const getActiveTeamQAs = () => {
+ 
 }
 
 /**
@@ -107,7 +112,7 @@ window.onload = () => {
   // do the same for QA
   getAllTeamMembers()
    .then((members) => {
-     return anyActiveTeamLead(members)
+     return getActiveTeamLead(members)
    })
    .then((member) => {
      const [activeTeamLead] = member;
