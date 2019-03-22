@@ -1,5 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
+const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
 require('dotenv').config();
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/', indexRouter);
 app.use('/api', userRouter);
 
 app.listen(port, () => {

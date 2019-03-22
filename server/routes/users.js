@@ -51,12 +51,20 @@ router.patch('/users/:id', (req, res) => {
           user.termEndDate = termEndDate || user.termEndDate;
           user.role = role || user.role;
 
-          return res.status(200)
-            .json({
-              status: 200,
-              data: [user]
+          user.update({
+            served: served || user.served,
+            startDate: new Date() || user.termStartDate,
+            endDate: termEndDate || user.termEndDate,
+            role: role || user.role
+          })
+            .then((updatedUser) => {
+              return res.status(200)
+                .json({
+                  status: 200,
+                  data: [updatedUser]
+                })
             })
-      }
+        }
     })
     return res.status(404)
       .json({
