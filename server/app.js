@@ -1,6 +1,7 @@
 const express = require('express');
-import cors from 'cors';
+const cors = require('cors');
 const logger = require('morgan');
+const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
 require('dotenv').config();
 
@@ -18,15 +19,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-    res.set({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, PATCH, POST, HEAD, OPTIONS, PUT'
-    })
-    next();
-});
-
+app.use('/', indexRouter);
 app.use('/api', userRouter);
 
 app.listen(port, () => {
