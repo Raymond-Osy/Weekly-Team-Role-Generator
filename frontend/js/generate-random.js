@@ -1,6 +1,6 @@
 let currentweekRole = [];
-// const baseApiUrl = 'https://hidden-hollows-71371.herokuapp.com/api';
-const baseApiUrl = 'http://localhost:7777/api';
+const baseApiUrl = 'https://hidden-hollows-71371.herokuapp.com/api';
+// const baseApiUrl = 'http://localhost:7777/api';
 
 const scrumMaster = document.getElementById('crum-master');
 const qa1 = document.getElementById("q1");
