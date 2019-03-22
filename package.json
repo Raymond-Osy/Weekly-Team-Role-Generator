@@ -1,0 +1,36 @@
+{
+  "name": "weekly-gen",
+  "version": "1.0.0",
+  "description": "This app automatically generates a Team leader and two Q and A every Friday each week.",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha ./server/test --exit",
+    "dev": "nodemon ./server/app.js",
+    "seed:prod": "NODE_ENV=production npx sequelize db:seed:all",
+    "start": "node ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Raymond-Osy/Weekly-Team-Role-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator/issues"
+  },
+  "homepage": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "sequelize-cli": "^5.4.0"
+  }
+}
