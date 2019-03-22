@@ -24,6 +24,17 @@ p {
 span {
   color: #FFAF30;
 }
+button {
+    background-color: #FFAF30;
+    font-size: 20px;
+    padding: 10px 28px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+button:hover {
+    background-color: #FFAF30;
+    color: white;
+}
 .container {
     width: 80%;
     margin: 160px auto;
