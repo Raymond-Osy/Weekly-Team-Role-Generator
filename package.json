@@ -9,6 +9,9 @@
     "seed:prod": "NODE_ENV=production npx sequelize db:seed:all",
     "start": "node ./server/app.js"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Raymond-Osy/Weekly-Team-Role-Generator.git"
