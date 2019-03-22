@@ -1,5 +1,6 @@
 let currentweekRole = [];
-const baseApiUrl = 'https://hidden-hollows-71371.herokuapp.com/api';
+// const baseApiUrl = 'https://hidden-hollows-71371.herokuapp.com/api';
+const baseApiUrl = 'http://localhost:7777/api';
 
 const scrumMaster = document.getElementById('crum-master');
 const qa1 = document.getElementById("q1");
@@ -44,14 +45,14 @@ const generateTeamRoles = () => {
           method: 'PATCH',
           body: JSON.stringify({
             served: true,
-            endDate: new Date(new Date().getTime - 24 * 60 * 60 * 1000 * 4)
+            dateEnd: new Date(new Date().getTime - 24 * 60 * 60 * 1000 * 4)
           })
         })
           .then((response) => {
             return response.json();
           })
           .then((data) => {
-            console.log(data);
+
           })
           .catch((err) => {
             
@@ -77,7 +78,11 @@ generateRoleButton.addEventListener("click", () => generateTeamRoles());
  */
 const anyActiveTeamLead = (members) => {
   const pastTeamLeads = members.filter((member) => member.served);
-  const activeTeamLead = pastTeamLeads.filter((teamLead) => new Date().getTime() - new Date(teamLead.endDate).getTime() > 0);
+  const activeTeamLead = pastTeamLeads.filter((teamLead) => {
+    return (teamLead.dateEnd) && (new Date().getTime() - new Date(teamLead.dateEnd).getTime()) > 0
+  });
+
+  console.log(activeTeamLead)
   return activeTeamLead;
 }
 
@@ -101,9 +106,12 @@ window.onload = () => {
   // show team lead
   // do the same for QA
   getAllTeamMembers()
-   .then((members) => anyActiveTeamLead(members))
+   .then((members) => {
+     return anyActiveTeamLead(members)
+   })
    .then((member) => {
-     console.log(member);
+     const [activeTeamLead] = member;
+     scrumMaster.textContent = getTeamMemberFullName(activeTeamLead);
    })
    .catch((err) => {
      // TODO: Handle network error here

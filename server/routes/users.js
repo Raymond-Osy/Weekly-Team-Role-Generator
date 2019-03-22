@@ -44,12 +44,12 @@ router.get('/users/:id', (req, res) => {
 router.patch('/users/:id', async (req, res) => {
   try {
     const teamMember = await Team.findByPk(req.params.id);
-  const { served, startDate, endDate, role} = req.body;
-  const updatedTeamMember = await teamMember.update({
-        served: served || teamMember.served,
-        startDate: new Date() || teamMember.termStartDate,
-        endDate: endDate || teamMember.endDate,
-        role: role || teamMember.role
+    const { served, startDate, endDate, role} = req.body;
+    const updatedTeamMember = await teamMember.update({
+        served: true,
+        startDate: new Date(),
+        dateEnd: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * 5),
+        role: 'qaaaa'
     })
     return res.status(200)
       .json({
@@ -57,6 +57,7 @@ router.patch('/users/:id', async (req, res) => {
         data: [updatedTeamMember]
       })
   } catch(e) {
+    console.log(e);
     return res.status(500)
       .json({
           status: 500,
