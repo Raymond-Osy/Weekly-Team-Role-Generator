@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 
 const { 
   PROD_DB_USER,
@@ -7,14 +9,13 @@ const {
 
   DEV_DB_NAME,
   DEV_DB_USER,
+  DEV_DB_PASSWORD
 } = process.env;
-
-require('dotenv').config();
 
 module.exports = {
   "development": {
     "username": DEV_DB_USER,
-    "password": "",
+    "password": DEV_DB_PASSWORD,
     "database":  DEV_DB_NAME,
     "host": "127.0.0.1",
     'port': 5432,

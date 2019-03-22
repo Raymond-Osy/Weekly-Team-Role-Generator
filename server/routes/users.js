@@ -41,36 +41,28 @@ router.get('/users/:id', (req, res) => {
       })
 })
 
-router.patch('/users/:id', (req, res) => {
-    Team.findByPk(req.params.id)
-      .then((user) => {
-        if (user) {
-          const { served, termStartDate, termEndDate, role } = req.body;
-          user.served = served || user.served;
-          user.termStartDate = new Date() || user.termStartDate;
-          user.termEndDate = termEndDate || user.termEndDate;
-          user.role = role || user.role;
-
-          user.update({
-            served: served || user.served,
-            startDate: new Date() || user.termStartDate,
-            endDate: termEndDate || user.termEndDate,
-            role: role || user.role
-          })
-            .then((updatedUser) => {
-              return res.status(200)
-                .json({
-                  status: 200,
-                  data: [updatedUser]
-                })
-            })
-        }
+router.patch('/users/:id', async (req, res) => {
+  try {
+    const teamMember = await Team.findByPk(req.params.id);
+  const { served, startDate, endDate, role} = req.body;
+  const updatedTeamMember = await teamMember.update({
+        served: served || teamMember.served,
+        startDate: new Date() || teamMember.termStartDate,
+        endDate: endDate || teamMember.endDate,
+        role: role || teamMember.role
     })
-    return res.status(404)
+    return res.status(200)
       .json({
-          status: 404,
-          error: 'User does not exist'
+        status: 200,
+        data: [updatedTeamMember]
       })
+  } catch(e) {
+    return res.status(500)
+      .json({
+          status: 500,
+          error: 'Invalid request'
+      })
+  }
 });
 
 module.exports = router;
