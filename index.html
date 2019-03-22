@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Weekly Team Role Generator</title>
-        <link rel="stylesheet" href="./styles.css">
-        <meta name="author" content="Raymond Akalonu">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <h1>Weekly Team Role Generator</h1>
+  <head>
+    <title>Weekly Team Role Generator</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <meta name="author" content="Raymond Akalonu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <h1>Weekly Team Role Generator</h1>
 
-        <div class="container">
-            <p>Welcome to <span>Team Cosmos</span> weekly role generator. This app automatically generates a team lead and two app mainteners every Friday each week. Please find below the details for this week.</p>
-            <p>week of <span>17 - 23, March 2019.</span></p>
-            <div class="wrap">
-                <div class="flex">
-                    <div class="col-25">
-                        <h2>Scrum Master</h2>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-25">
-                        <h2>Q & A 1</h2>
-                        <p>John Doe</p>
-                    </div>
-                    <div class="col-25">
-                        <h2>Q & A 2</h2>
-                        <p>John Doe</p>
-                    </div>
-                </div><br>
-            </div>
+    <div class="container">
+      <p>
+        Welcome to <span>Team Cosmos</span> weekly role generator. This app
+        automatically generates a team lead and two app mainteners every Friday
+        each week. Please find below the details for this week.
+      </p>
+      <p>week of <span>17 - 23, March 2019.</span></p>
+      <button id="generate">Generate Roles</button>
+      <div class="wrap">
+        <div class="flex">
+          <div class="col-25">
+            <h2>Scrum Master</h2>
+            <p id="crum-master"></p>
+          </div>
+          <div class="col-25">
+            <h2>Q & A 1</h2>
+            <p id="q1"></p>
+          </div>
+          <div class="col-25">
+            <h2>Q & A 2</h2>
+            <p id="q2"></p>
+          </div>
         </div>
+        <br />
+      </div>
+    </div>
 
-        <footer>
-            <p>Copyright &copy; 2019, Team Cosmos.</p>
-            <!-- <p>Made with love by Raymond for the team</p> -->
-        </footer>
-    </body>
-</html> 
+    <footer>
+      <p>Copyright &copy; 2019, Team Cosmos.</p>
+      <!-- <p>Made with love by Raymond for the team</p> -->
+    </footer>
+    <script src="./generate-random.js"></script>
+  </body>
+</html>
