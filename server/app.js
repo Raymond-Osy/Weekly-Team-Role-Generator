@@ -1,5 +1,5 @@
 const express = require('express');
-import cors from 'cors';
+const cors = require('cors');
 const logger = require('morgan');
 const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
