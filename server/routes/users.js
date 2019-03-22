@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const {Team} = require('../models');
 
-console.log(Team);
-
 const  router = Router();
 
 router.get('/users', (req, res) => {

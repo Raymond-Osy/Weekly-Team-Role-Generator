@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha ./server/test --exit",
     "dev": "nodemon ./server/app.js",
-    "seed:prod": "NODE_ENV=production npx sequelize db:seed:all"
+    "seed:prod": "NODE_ENV=production npx sequelize db:seed:all",
+    "start": "node ./server/app.js"
   },
   "repository": {
     "type": "git",

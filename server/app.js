@@ -1,6 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 const userRouter = require('./routes/users');
+require('dotenv').config();
+
 const app = express();
 
 const port = parseInt(process.env.PORT) || 7777;
