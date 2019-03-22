@@ -4,7 +4,8 @@
   "description": "This app automatically generates a Team leader and two Q and A every Friday each week.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./server/test --exit",
+    "dev": "nodemon ./server/app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator/issues"
   },
-  "homepage": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator#readme"
+  "homepage": "https://github.com/Raymond-Osy/Weekly-Team-Role-Generator#readme",
+  "dependencies": {
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.1.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.4.0"
+  }
 }
