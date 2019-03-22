@@ -1,10 +1,13 @@
 const express = require('express');
+import cors from 'cors';
 const logger = require('morgan');
 const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors());
 
 const port = parseInt(process.env.PORT) || 7777;
 
