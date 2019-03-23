@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Team } = require("../models");
+const { generateDate } = require("../utils");
 
 const router = Router();
 
@@ -46,7 +47,7 @@ router.patch("/users/:id", async (req, res) => {
     const updatedTeamMember = await teamMember.update({
       served: true,
       dateStart: new Date(),
-      dateEnd: new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * 5),
+      dateEnd: generateDate(5), // every team lead or qa term ends after 5 days
       role: role || teamMember.role
     });
     return res.status(200).json({
