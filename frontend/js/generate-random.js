@@ -136,9 +136,9 @@ generateRoleButton.addEventListener("click", () => generateTeamRoles());
  * @param {Array} members
  * @param {Array}
  */
-const getActiveTeamLead = members => {
+const getActiveTeamLead = (members, role = "team lead") => {
   const pastTeamLeads = members.filter(
-    member => member.served && member.role === "team lead"
+    member => member.served && member.role === role
   );
   const activeTeamLead = pastTeamLeads.filter(teamLead => {
     return (
@@ -157,6 +157,7 @@ const getActiveTeamQAs = () => {};
 /**
  * @func getAllTeamMembers
  * @returns {Promise<Array>} Returns a promise that resolves to an  array
+ * of all team members
  */
 const getAllTeamMembers = () => {
   return fetch(`${baseAPIUrlLocal}/users`)
@@ -169,21 +170,40 @@ const getAllTeamMembers = () => {
     });
 };
 
-window.onload = () => {
-  // if team lead already exist for the week and is active
-  // show team lead
-  // do the same for QA
-  getAllTeamMembers()
+/**
+ * @func getTeamLeadsAndQAs
+ * @returns {Promise<Array>} Resolves to an array of the active team lead
+ * and the two active QAs
+ */
+const getTeamLeadsAndQAs = () => {
+  return getAllTeamMembers()
     .then(members => {
-      console.log(members);
-      return getActiveTeamLead(members);
-    })
-    .then(member => {
-      // console.log(member);
-      const [activeTeamLead] = member;
-      scrumMaster.textContent = getTeamMemberFullName(activeTeamLead);
+      const leads = members.filter(member => {
+        const leadIsActive =
+          new Date(member.dateEnd).getTime() - new Date().getTime() >= 0;
+        return (
+          ((member.served && member.role === "team lead") ||
+            member.role === "qa") &&
+          leadIsActive
+        );
+      });
+
+      return leads;
     })
     .catch(err => {
-      // TODO: Handle network error here
+      throw err;
+    });
+};
+
+window.onload = () => {
+  getTeamLeadsAndQAs()
+    .then(leads => {
+      const [teamLead, firstQA, secondQA] = leads;
+      scrumMaster.textContent = getTeamMemberFullName(teamLead);
+      qa1.textContent = getTeamMemberFullName(firstQA);
+      qa2.textContent = getTeamMemberFullName(secondQA);
+    })
+    .catch(err => {
+      throw err;
     });
 };
