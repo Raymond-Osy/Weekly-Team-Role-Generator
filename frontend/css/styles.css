@@ -1,3 +1,5 @@
+@import url('./fonts.css');
+
 body {
     margin: 0;
     text-align: center;
@@ -5,19 +7,19 @@ body {
     min-height: 100%;
 }
 * {
+    font-family: Sailec;
     box-sizing: border-box;
 }
 h1 {
-    font-family: Tahoma, Geneva, sans-serif;
     color: #FFAF30;
     font-size: 50px;
+    font-family: Boing;
+    margin: 1rem auto;
 }
 h2 {
-    font-family: Tahoma, Geneva, sans-serif;
     color: #FFAF30;
 }
 p {
-    font-family: "Nunito", sans-serif;
     font-size: 20px;
     color: #fff;
 }
@@ -30,20 +32,23 @@ button {
     padding: 10px 28px;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+    border-radius: 4px;
 }
 button:hover {
     background-color: #FFAF30;
-    color: white;
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0px 2px 7.5px 0px #2f3033;
 }
 .container {
     width: 80%;
-    margin: 160px auto;
-    height: 350px;
-    padding: 15px;
+    margin: 3rem auto;
+    height: auto;
+    padding: 2rem;
     background-color:#3558f5;
-    border: 1px solid #151e22;
-    border-radius: 4px;
-    box-shadow: 0px 5px 15px 0px #030b18;
+    border: 1px solid #3558f5;
+    border-radius: 16px;
+    box-shadow: 0px 5px 15px 0px #2f3033;
 }
 #roleName{
     color: #FFAF30;
@@ -57,7 +62,8 @@ button:hover {
 .wrap {
     display: flex;
     flex-direction: column;
-    padding: 25px;
+    margin-top: 1rem;
+    /* padding: 25px; */
 }
 .flex {
     display: flex;
@@ -68,10 +74,11 @@ button:hover {
 
 footer {
     display: flex;
+    position: fixed;
     width: 100%;
     height: 70px;
     color: #FFFFFF;
-    background: linear-gradient(rgba(0, 0, 0, 0.205), rgba(0, 0, 0, 0.9));
+    background: inherit;
     padding: 0 10px;
     text-align: center;
     justify-content: center;
