@@ -1,6 +1,6 @@
 const chai = require('chai');
 const request = require('supertest');
-const app = require('../../../tl-backend/server/app');
+const app = require('../app.js');
 
 const agent = request(app);
 
