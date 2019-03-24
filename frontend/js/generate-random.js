@@ -31,7 +31,7 @@ const allHaveServed = teamMembers => {
  * @returns {Promise<*>} Resolves to the updated team member
  */
 const updateTeamMemberStatus = (teamMember, role = "team lead") => {
-  return fetch(`${baseAPIUrlLocal}/users/${teamMember.id}`, {
+  return fetch(`${baseAPIUrlHosted}/users/${teamMember.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json"
@@ -55,7 +55,7 @@ const updateTeamMemberStatus = (teamMember, role = "team lead") => {
  * @returns {void} Generates a new user
  */
 const generateTeamRoles = () => {
-  fetch(`${baseAPIUrlLocal}/users`)
+  fetch(`${baseAPIUrlHosted}/users`)
     .then(response => response.json())
     .then(data => {
       if (data.status === 200) {
@@ -160,7 +160,7 @@ const getActiveTeamQAs = () => {};
  * of all team members
  */
 const getAllTeamMembers = () => {
-  return fetch(`${baseAPIUrlLocal}/users`)
+  return fetch(`${baseAPIUrlHosted}/users`)
     .then(response => response.json())
     .then(data => {
       return data.data;
