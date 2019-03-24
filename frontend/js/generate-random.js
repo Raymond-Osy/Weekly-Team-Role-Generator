@@ -1,6 +1,6 @@
 let currentweekRole = [];
-const baseApiUrl = "https://hidden-hollows-71371.herokuapp.com/api";
-// const baseApiUrl = 'http://localhost:7777/api';
+const baseAPIUrlHosted = "https://hidden-hollows-71371.herokuapp.com/api";
+const baseAPIUrlLocal = "http://localhost:7777/api";
 
 const scrumMaster = document.getElementById("crum-master");
 const qa1 = document.getElementById("q1");
@@ -24,7 +24,7 @@ const getTeamMemberFullName = teamMember => {
  * @returns {Promise<*>} Resolves to the updated team member
  */
 const updateTeamMemberStatus = (teamMember, role = "team lead") => {
-  return fetch(`${baseApiUrl}/users/${teamMember.id}`, {
+  return fetch(`${baseAPIUrlLocal}/users/${teamMember.id}`, {
     method: "PATCH",
     body: JSON.stringify({
       served: true,
@@ -45,7 +45,7 @@ const updateTeamMemberStatus = (teamMember, role = "team lead") => {
  * @returns {void} Generates a new user
  */
 const generateTeamRoles = () => {
-  fetch(`${baseApiUrl}/users`)
+  fetch(`${baseAPIUrlLocal}/users`)
     .then(response => response.json())
     .then(data => {
       if (data.status === 200) {
@@ -59,6 +59,27 @@ const generateTeamRoles = () => {
           ) {
             currentweekRole.push(randomMember);
           }
+        }
+
+        let teamLead1 = data.data[Math.floor(Math.random() * data.data.length)];
+
+        // assumption here is that: one who has served as
+        // QA can later serve as team lead
+        while (teamLead1.served && teamLead1.role === "team lead") {
+          teamLead1 = data.data[Math.floor(Math.random() * data.data.length)];
+        }
+
+        let qaA = data.data[Math.floor(Math.random() * data.data.length)];
+        let qaB = data.data[Math.floor(Math.random() * data.data.length)];
+
+        // assumption here is that: one who has served as
+        // QA can later serve as team lead
+        while (qaA.served && qaA.role === "qa") {
+          qaA = data.data[Math.floor(Math.random() * data.data.length)];
+        }
+
+        while (qaB.served && qaB.role === "qa") {
+          qaB = data.data[Math.floor(Math.random() * data.data.length)];
         }
 
         const [teamLead, firstQA, secondQA] = currentweekRole;
@@ -109,7 +130,7 @@ const getActiveTeamQAs = () => {};
  * @returns {Promise<Array>} Returns a promise that resolves to an  array
  */
 const getAllTeamMembers = () => {
-  return fetch(`${baseApiUrl}/users`)
+  return fetch(`${baseAPIUrlLocal}/users`)
     .then(response => response.json())
     .then(data => {
       return data.data;
