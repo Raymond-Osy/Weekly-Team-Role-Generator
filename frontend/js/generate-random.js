@@ -17,6 +17,13 @@ const getTeamMemberFullName = teamMember => {
   return `${firstName} ${lastName}`;
 };
 
+const allHaveServed = teamMembers => {
+  const membersWhoHaveServed = teamMembers.filter(
+    teamMember => teamMember.served
+  );
+  return membersWhoHaveServed.length === teamMembers.length;
+};
+
 /**
  *
  * @param {*} teamMember Team member object
@@ -26,6 +33,9 @@ const getTeamMemberFullName = teamMember => {
 const updateTeamMemberStatus = (teamMember, role = "team lead") => {
   return fetch(`${baseAPIUrlLocal}/users/${teamMember.id}`, {
     method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       served: true,
       role
@@ -49,50 +59,78 @@ const generateTeamRoles = () => {
     .then(response => response.json())
     .then(data => {
       if (data.status === 200) {
-        for (let i = 0; i < data.data.length; i++) {
-          let randomMember =
+        let teamLead = data.data[Math.floor(Math.random() * data.data.length)];
+
+        // assumption here is that: anyone who has served as
+        // QA can later serve as team lead
+        while (teamLead.served && teamLead.role === "team lead") {
+          teamLead = data.data[Math.floor(Math.random() * data.data.length)];
+        }
+
+        let firstSelectedQA =
+          data.data[Math.floor(Math.random() * data.data.length)];
+        let secondSelectedQA =
+          data.data[Math.floor(Math.random() * data.data.length)];
+
+        let qa1IsATeamLead = firstSelectedQA.firstName === teamLead.firstName;
+
+        while (qa1IsATeamLead) {
+          firstSelectedQA =
             data.data[Math.floor(Math.random() * data.data.length)];
-
-          if (
-            !currentweekRole.includes(randomMember) &&
-            currentweekRole.length != 3
-          ) {
-            currentweekRole.push(randomMember);
-          }
+          qa1IsATeamLead = firstSelectedQA.firstName === teamLead.firstName;
         }
 
-        let teamLead1 = data.data[Math.floor(Math.random() * data.data.length)];
-
-        // assumption here is that: one who has served as
-        // QA can later serve as team lead
-        while (teamLead1.served && teamLead1.role === "team lead") {
-          teamLead1 = data.data[Math.floor(Math.random() * data.data.length)];
+        // assumption here is that: anyone who has served as
+        // team lead can later serve as QA
+        while (firstSelectedQA.served && firstSelectedQA.role === "qa") {
+          firstSelectedQA =
+            data.data[Math.floor(Math.random() * data.data.length)];
         }
 
-        let qaA = data.data[Math.floor(Math.random() * data.data.length)];
-        let qaB = data.data[Math.floor(Math.random() * data.data.length)];
+        let qa2HasBeenSelected =
+          secondSelectedQA.firstName === teamLead.firstName ||
+          secondSelectedQA.firstName === secondSelectedQA.firstName;
 
-        // assumption here is that: one who has served as
-        // QA can later serve as team lead
-        while (qaA.served && qaA.role === "qa") {
-          qaA = data.data[Math.floor(Math.random() * data.data.length)];
+        while (qa2HasBeenSelected) {
+          secondSelectedQA =
+            data.data[Math.floor(Math.random() * data.data.length)];
+          qa2HasBeenSelected =
+            secondSelectedQA.firstName === teamLead.firstName ||
+            secondSelectedQA.firstName === firstSelectedQA.firstName;
         }
 
-        while (qaB.served && qaB.role === "qa") {
-          qaB = data.data[Math.floor(Math.random() * data.data.length)];
+        while (
+          secondSelectedQA.served &&
+          secondSelectedQA.role === "qa" &&
+          !allHaveServed(data.data)
+        ) {
+          secondSelectedQA =
+            data.data[Math.floor(Math.random() * data.data.length)];
         }
-
-        const [teamLead, firstQA, secondQA] = currentweekRole;
 
         updateTeamMemberStatus(teamLead)
-          .then(teamLead => {})
+          .then(teamLead => {
+            scrumMaster.innerHTML = `${getTeamMemberFullName(teamLead)}`;
+          })
           .catch(err => {
             throw err;
           });
 
-        scrumMaster.innerHTML = `${getTeamMemberFullName(teamLead)}`;
-        qa1.innerHTML = `${getTeamMemberFullName(firstQA)}`;
-        qa2.innerHTML = `${getTeamMemberFullName(secondQA)}`;
+        updateTeamMemberStatus(firstSelectedQA, "qa")
+          .then(teamQA => {
+            qa1.innerHTML = `${getTeamMemberFullName(teamQA)}`;
+          })
+          .catch(err => {
+            throw err;
+          });
+
+        updateTeamMemberStatus(secondSelectedQA, "qa")
+          .then(teamQA => {
+            qa2.innerHTML = `${getTeamMemberFullName(teamQA)}`;
+          })
+          .catch(err => {
+            throw err;
+          });
       } else {
         console.log("server connection failed");
       }
@@ -114,7 +152,7 @@ const getActiveTeamLead = members => {
   const activeTeamLead = pastTeamLeads.filter(teamLead => {
     return (
       teamLead.dateEnd &&
-      new Date().getTime() - new Date(teamLead.dateEnd).getTime() > 0
+      new Date(teamLead.dateEnd).getTime() - new Date().getTime() > 0
     );
   });
   return activeTeamLead;
@@ -146,9 +184,11 @@ window.onload = () => {
   // do the same for QA
   getAllTeamMembers()
     .then(members => {
+      console.log(members);
       return getActiveTeamLead(members);
     })
     .then(member => {
+      // console.log(member);
       const [activeTeamLead] = member;
       scrumMaster.textContent = getTeamMemberFullName(activeTeamLead);
     })
