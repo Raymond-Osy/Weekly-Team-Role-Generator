@@ -7,7 +7,7 @@
     "test": "mocha ./server/test --exit",
     "dev": "nodemon ./server/app.js",
     "seed:prod": "NODE_ENV=production npx sequelize db:seed:all",
-    "start": "node ./server/app.js"
+    "start": "nodemon ./server/app.js"
   },
   "husky": {
     "hooks": {
