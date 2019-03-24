@@ -108,25 +108,16 @@ const generateTeamRoles = () => {
             data.data[Math.floor(Math.random() * data.data.length)];
         }
 
-        updateTeamMemberStatus(teamLead)
-          .then(teamLead => {
+        Promise.all([
+          updateTeamMemberStatus(teamLead),
+          updateTeamMemberStatus(firstSelectedQA, "qa"),
+          updateTeamMemberStatus(secondSelectedQA, "qa")
+        ])
+          .then(values => {
+            const [teamLead, firstQA, secondQA] = values;
             scrumMaster.innerHTML = `${getTeamMemberFullName(teamLead)}`;
-          })
-          .catch(err => {
-            throw err;
-          });
-
-        updateTeamMemberStatus(firstSelectedQA, "qa")
-          .then(teamQA => {
-            qa1.innerHTML = `${getTeamMemberFullName(teamQA)}`;
-          })
-          .catch(err => {
-            throw err;
-          });
-
-        updateTeamMemberStatus(secondSelectedQA, "qa")
-          .then(teamQA => {
-            qa2.innerHTML = `${getTeamMemberFullName(teamQA)}`;
+            qa1.innerHTML = `${getTeamMemberFullName(firstQA)}`;
+            qa2.innerHTML = `${getTeamMemberFullName(secondQA)}`;
           })
           .catch(err => {
             throw err;
