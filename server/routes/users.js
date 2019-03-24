@@ -41,7 +41,6 @@ router.get("/users/:id", (req, res) => {
 });
 
 router.patch("/users/:id", async (req, res) => {
-  console.log(req.body);
   try {
     const teamMember = await Team.findByPk(req.params.id);
     const { served, startDate, endDate, role } = req.body;
