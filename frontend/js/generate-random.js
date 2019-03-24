@@ -6,6 +6,9 @@ const scrumMaster = document.getElementById("crum-master");
 const qa1 = document.getElementById("q1");
 const qa2 = document.getElementById("q2");
 const generateRoleButton = document.getElementById("generate");
+const roleStartDate = document.getElementById("duty-week__first");
+const roleEndDate = document.getElementById("duty-week__last");
+const roleYear = document.getElementById("duty-week__year");
 
 /**
  * @func getTeamMemberFullName
@@ -195,6 +198,32 @@ const getTeamLeadsAndQAs = () => {
     });
 };
 
+/**
+ * @func getRoleDates
+ * @returns {Array<String>} Returns an array of the first and last dates of the duty week
+ */
+const getRoleDates = () => {
+  const TOTAL_DUTY_DAYS = 5;
+  const today = new Date();
+  const todayStr = new Date().toDateString();
+  const fromDay = today.getDate();
+  const fromMonth = todayStr.split(" ")[1];
+  const future = 24 * TOTAL_DUTY_DAYS * 60 * 60 * 1000;
+  const to = new Date(today.getTime() + future);
+  const toDay = to.getDate();
+  const toMonth = to.toDateString().split(" ")[1];
+
+  const start = `${fromDay} ${fromMonth}`;
+  const end = `${toDay} ${toMonth} ${to.getFullYear()}`;
+  return [start, end];
+};
+
+const displayRoleDates = () => {
+  const [start, end] = getRoleDates();
+  roleStartDate.textContent = start;
+  roleEndDate.textContent = end;
+};
+
 window.onload = () => {
   getTeamLeadsAndQAs()
     .then(leads => {
@@ -206,4 +235,6 @@ window.onload = () => {
     .catch(err => {
       throw err;
     });
+
+  displayRoleDates();
 };
