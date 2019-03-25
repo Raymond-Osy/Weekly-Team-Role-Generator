@@ -7,7 +7,7 @@
     "test": "mocha ./server/test --exit",
     "dev": "nodemon ./server/app.js",
     "seed:prod": "NODE_ENV=production npx sequelize db:seed:all",
-    "start": "node ./server/app.js"
+    "start": "nodemon ./server/app.js"
   },
   "engines": {
     "node": "10.x"
@@ -34,7 +34,10 @@
     "sequelize": "^5.1.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
-    "sequelize-cli": "^5.4.0"
+    "sequelize-cli": "^5.4.0",
+    "supertest": "^4.0.2"
   }
 }

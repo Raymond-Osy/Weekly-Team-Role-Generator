@@ -1,2 +1,4 @@
 # Weekly-Team-Role-Generator
-This app automatically generates a Team leader and two Q and A every Friday each week.
+This app generates a Team leader and two Q and A every Friday each week. 
+Live gh-pages: https://raymond-osy.github.io/Weekly-Team-Role-Generator/
+Heroku: https://hidden-hollows-71371.herokuapp.com
